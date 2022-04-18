@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, Alert } from "react-native";
 import { useState } from "react";
 import { Cell } from "./src/components/Grid/Cell";
+import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const WORD = "HELLO";
 

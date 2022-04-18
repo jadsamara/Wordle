@@ -1,6 +1,6 @@
 import { View, TextInput, StyleSheet, Text } from "react-native";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { RoundedButton } from "../RoundedButton/RoundedButton";
 
 export const Cell = ({
@@ -9,7 +9,7 @@ export const Cell = ({
   addWordThree,
   addWordFour,
   addWordFive,
-  theWord,
+  value,
 }) => {
   const [letterOne, onChangeLetterOne] = useState("");
   const [letterTwo, onChangeLetterTwo] = useState("");
@@ -17,15 +17,19 @@ export const Cell = ({
   const [letterFour, onChangeLetterFour] = useState("");
   const [letterFive, onChangeLetterFive] = useState("");
 
+  const ref2 = useRef();
+  const ref3 = useRef();
+  const ref4 = useRef();
+  const ref5 = useRef();
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <TextInput
           style={styles.input}
-          blurOnSubmit={false}
+          blurOnSubmit={true}
           onChangeText={(letterOne) => {
             if (letterOne.length === 1) {
-              secondTextInput.focus();
+              ref2.current.focus();
             }
             onChangeLetterOne(letterOne);
           }}
@@ -33,38 +37,32 @@ export const Cell = ({
         <TextInput
           onChangeText={(letterTwo) => {
             if (letterTwo.length === 1) {
-              thirdTextInput.focus();
+              ref3.current.focus();
             }
             onChangeLetterTwo(letterTwo);
           }}
-          ref={(input) => {
-            secondTextInput = input;
-          }}
+          ref={ref2}
           style={styles.input}
           maxLength={1}
         />
         <TextInput
           onChangeText={(letterThree) => {
             if (letterThree.length === 1) {
-              fourthTextInput.focus();
+              ref4.current.focus();
             }
             onChangeLetterThree(letterThree);
           }}
-          ref={(input) => {
-            thirdTextInput = input;
-          }}
+          ref={ref3}
           style={styles.input}
         />
         <TextInput
           onChangeText={(letterFour) => {
             if (letterFour.length === 1) {
-              fifthTextInput.focus();
+              ref5.current.focus();
             }
             onChangeLetterFour(letterFour);
           }}
-          ref={(input) => {
-            fourthTextInput = input;
-          }}
+          ref={ref4}
           style={styles.input}
         />
         <TextInput
@@ -78,9 +76,7 @@ export const Cell = ({
             }
             onChangeLetterFive(letterFive);
           }}
-          ref={(input) => {
-            fifthTextInput = input;
-          }}
+          ref={ref5}
           style={styles.input}
           maxLength={1}
         />
