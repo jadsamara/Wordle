@@ -1,74 +1,42 @@
-import { StyleSheet, Text, View, SafeAreaView, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Alert,
+  useRef,
+} from "react-native";
 import { useState } from "react";
 import { Cell } from "./src/components/Grid/Cell";
-import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const WORD = "HELLO";
 
 export default function App() {
-  const [wordOne, setCurrentWordOne] = useState("");
-  const [wordTwo, setCurrentWordTwo] = useState("");
-  const [wordThree, setCurrentWordThree] = useState("");
-  const [wordFour, setCurrentWordFour] = useState("");
-  const [wordFive, setCurrentWordFive] = useState("");
+  const [word, setWord] = useState();
 
-  console.log(wordOne + wordTwo + wordThree + wordFour + wordFive);
+  fetch("https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt")
+    .then((response) => {
+      return response;
+    })
+    .then((data) => {
+      console.log(data);
+    });
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Wordle</Text>
-      {wordOne + wordTwo + wordThree + wordFour + wordFive === WORD ? (
-        Alert.alert("WORDS MATCH")
+
+      {word === WORD ? (
+        <Cell />
       ) : (
         <View style={styles.grid}>
-          <Cell
-            addWordOne={setCurrentWordOne}
-            addWordTwo={setCurrentWordTwo}
-            addWordThree={setCurrentWordThree}
-            addWordFour={setCurrentWordFour}
-            addWordFive={setCurrentWordFive}
-            value={100}
-          />
-          <Cell
-            addWordOne={setCurrentWordOne}
-            addWordTwo={setCurrentWordTwo}
-            addWordThree={setCurrentWordThree}
-            addWordFour={setCurrentWordFour}
-            addWordFive={setCurrentWordFive}
-            value={200}
-          />
-          <Cell
-            addWordOne={setCurrentWordOne}
-            addWordTwo={setCurrentWordTwo}
-            addWordThree={setCurrentWordThree}
-            addWordFour={setCurrentWordFour}
-            addWordFive={setCurrentWordFive}
-            value={300}
-          />
-          <Cell
-            addWordOne={setCurrentWordOne}
-            addWordTwo={setCurrentWordTwo}
-            addWordThree={setCurrentWordThree}
-            addWordFour={setCurrentWordFour}
-            addWordFive={setCurrentWordFive}
-            value={400}
-          />
-          <Cell
-            addWordOne={setCurrentWordOne}
-            addWordTwo={setCurrentWordTwo}
-            addWordThree={setCurrentWordThree}
-            addWordFour={setCurrentWordFour}
-            addWordFive={setCurrentWordFive}
-            value={500}
-          />
-          <Cell
-            addWordOne={setCurrentWordOne}
-            addWordTwo={setCurrentWordTwo}
-            addWordThree={setCurrentWordThree}
-            addWordFour={setCurrentWordFour}
-            addWordFive={setCurrentWordFive}
-            value={600}
-          />
+          <Cell addWord={setWord} />
+          <Cell addWord={setWord} />
+          <Cell addWord={setWord} />
+          <Cell addWord={setWord} />
+          <Cell addWord={setWord} />
+          <Cell addWord={setWord} />
+
           <Text style={{ fontSize: 20, paddingTop: 50, textAlign: "center" }}>
             Word of the day is: {WORD}
           </Text>
