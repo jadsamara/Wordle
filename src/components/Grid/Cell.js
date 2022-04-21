@@ -2,14 +2,21 @@ import { View, TextInput, StyleSheet, Text } from "react-native";
 
 import { useState, useRef } from "react";
 
-const WORD = "HELLO";
-
 export const Cell = ({ addWord }) => {
   const [letterOne, onChangeLetterOne] = useState("");
   const [letterTwo, onChangeLetterTwo] = useState("");
   const [letterThree, onChangeLetterThree] = useState("");
   const [letterFour, onChangeLetterFour] = useState("");
   const [letterFive, onChangeLetterFive] = useState("");
+
+  const [state, setState] = useState([]);
+
+  useEffect(async () => {
+    await fetch("https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt")
+      .then((res) => res.text())
+      .then((data) => setState(data.split("\n")))
+      .catch((err) => console.log(err));
+  }, []);
 
   const ref2 = useRef();
   const ref3 = useRef();
@@ -21,12 +28,12 @@ export const Cell = ({ addWord }) => {
       <View style={styles.row}>
         <TextInput
           style={
-            letterOne === WORD.charAt(0)
+            letterOne === state.charAt(0)
               ? styles.green
-              : letterOne === WORD.charAt(1) ||
-                letterOne === WORD.charAt(2) ||
-                letterOne === WORD.charAt(3) ||
-                letterOne === WORD.charAt(4)
+              : letterOne === state.charAt(1) ||
+                letterOne === state.charAt(2) ||
+                letterOne === state.charAt(3) ||
+                letterOne === state.charAt(4)
               ? styles.yellow
               : styles.input
           }
@@ -46,12 +53,12 @@ export const Cell = ({ addWord }) => {
           }}
           ref={ref2}
           style={
-            letterTwo === WORD.charAt(1)
+            letterTwo === state.charAt(1)
               ? styles.green
-              : letterTwo === WORD.charAt(0) ||
-                letterTwo === WORD.charAt(2) ||
-                letterTwo === WORD.charAt(3) ||
-                letterTwo === WORD.charAt(4)
+              : letterTwo === state.charAt(0) ||
+                letterTwo === state.charAt(2) ||
+                letterTwo === state.charAt(3) ||
+                letterTwo === state.charAt(4)
               ? styles.yellow
               : styles.input
           }
@@ -65,12 +72,12 @@ export const Cell = ({ addWord }) => {
           }}
           ref={ref3}
           style={
-            letterThree === WORD.charAt(2)
+            letterThree === state.charAt(2)
               ? styles.green
-              : letterThree === WORD.charAt(1) ||
-                letterThree === WORD.charAt(0) ||
-                letterThree === WORD.charAt(3) ||
-                letterThree === WORD.charAt(4)
+              : letterThree === state.charAt(1) ||
+                letterThree === state.charAt(0) ||
+                letterThree === state.charAt(3) ||
+                letterThree === state.charAt(4)
               ? styles.yellow
               : styles.input
           }
@@ -84,12 +91,12 @@ export const Cell = ({ addWord }) => {
           }}
           ref={ref4}
           style={
-            letterFour === WORD.charAt(3)
+            letterFour === state.charAt(3)
               ? styles.green
-              : letterFour === WORD.charAt(1) ||
-                letterFour === WORD.charAt(2) ||
-                letterFour === WORD.charAt(0) ||
-                letterFour === WORD.charAt(4)
+              : letterFour === state.charAt(1) ||
+                letterFour === state.charAt(2) ||
+                letterFour === state.charAt(0) ||
+                letterFour === state.charAt(4)
               ? styles.yellow
               : styles.input
           }
@@ -105,12 +112,12 @@ export const Cell = ({ addWord }) => {
           }}
           ref={ref5}
           style={
-            letterFive === WORD.charAt(4)
+            letterFive === state.charAt(4)
               ? styles.green
-              : letterFive === WORD.charAt(1) ||
-                letterFive === WORD.charAt(2) ||
-                letterFive === WORD.charAt(3) ||
-                letterFive === WORD.charAt(0)
+              : letterFive === state.charAt(1) ||
+                letterFive === state.charAt(2) ||
+                letterFive === state.charAt(3) ||
+                letterFive === state.charAt(0)
               ? styles.yellow
               : styles.input
           }

@@ -6,27 +6,25 @@ import {
   Alert,
   useRef,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Cell } from "./src/components/Grid/Cell";
-
-const WORD = "HELLO";
 
 export default function App() {
   const [word, setWord] = useState();
+  const [state, setState] = useState([]);
 
-  fetch("https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt")
-    .then((response) => {
-      return response;
-    })
-    .then((data) => {
-      console.log(data);
-    });
-
+  useEffect(async () => {
+    await fetch("https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt")
+      .then((res) => res.text())
+      .then((data) => setState(data.split("\n")))
+      .catch((err) => console.log(err));
+  }, []);
+  console.log(state[5]);
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>Wordle</Text>
 
-      {word === WORD ? (
+      {word === state[2] ? (
         <Cell />
       ) : (
         <View style={styles.grid}>
@@ -38,7 +36,7 @@ export default function App() {
           <Cell addWord={setWord} />
 
           <Text style={{ fontSize: 20, paddingTop: 50, textAlign: "center" }}>
-            Word of the day is: {WORD}
+            Word of the day is: {state[2]}
           </Text>
         </View>
       )}
